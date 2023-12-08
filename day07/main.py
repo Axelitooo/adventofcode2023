@@ -1,27 +1,16 @@
 JOKERS = [False]
 
 def value(card):
-	if JOKERS[0]:
-		values = { "J":0, "T":9, "Q":10, "K":11, "A":12 }
-	else:
-		values = { "T":8, "J":9, "Q":10, "K":11, "A":12 }
-	if card.isdigit():
-		value = int(card)-(2-JOKERS[0])
-	else:
-		value = values[card]
-	return value
+	values = { "J":9-9*JOKERS[0], "T":8+JOKERS[0], "Q":10, "K":11, "A":12 }
+	return int(card)-(2-JOKERS[0]) if card.isdigit() else values[card]
 
 def get_highest(hands, rank, cardi):
 	indexes = [[] for i in range(13)]
 	for index in rank:
 		indexes[value(hands[index][cardi])].append(index)
-	for indexs in indexes[::-1]:
-		if len(indexs) > 0:
-			if len(indexs) == 1:
-				return indexs[0]
-			else:
-				rank = indexs
-				return get_highest(hands = hands, rank = rank, cardi = cardi+1)
+	for rank in indexes[::-1]:
+		if len(rank) > 0:
+			return rank[0] if len(rank) == 1 else get_highest(hands = hands, rank = rank, cardi = cardi+1)
 
 def get_ranks(hands):
 	ranks = [[] for i in range(7)]
@@ -30,26 +19,16 @@ def get_ranks(hands):
 		for card in hand:
 			cards[value(card)] += 1
 		if JOKERS[0] and cards[0] > 0:
-			if len([j for j in cards if j == 0]) >= 11:
+			if len([j for j in cards if j != 0]) <= 2:
 				ranks[6].append(i)
 			else:
 				if 3 in cards:
 					ranks[5].append(i)
 				elif 2 in cards:
 					if cards[0] == 2:
-						if 2 in cards[1:]:
-							ranks[5].append(i)
-						else:
-							ranks[3].append(i)
+						ranks[5].append(i) if 2 in cards[1:] else ranks[3].append(i)
 					else:
-						pairs = 0
-						for j in range(len(cards)):
-							if cards[j] == 2:
-								pairs += 1
-						if pairs == 2:
-							ranks[4].append(i)
-						else:
-							ranks[3].append(i)
+						ranks[4].append(i) if sum([j == 2 for j in cards]) == 2 else ranks[3].append(i)
 				else:
 					ranks[1].append(i)
 		else:
@@ -58,19 +37,9 @@ def get_ranks(hands):
 			elif 4 in cards:
 				ranks[5].append(i)
 			elif 3 in cards:
-				if 2 in cards:
-					ranks[4].append(i)
-				else:
-					ranks[3].append(i)
+				ranks[4].append(i) if 2 in cards else ranks[3].append(i)
 			elif 2 in cards:
-				pairs = 0
-				for j in range(len(cards)):
-					if cards[j] == 2:
-						pairs += 1
-				if pairs == 2:
-					ranks[2].append(i)
-				else:
-					ranks[1].append(i)
+				ranks[2].append(i) if sum([j == 2 for j in cards]) == 2 else ranks[1].append(i)
 			else:
 				ranks[0].append(i)
 	return ranks
