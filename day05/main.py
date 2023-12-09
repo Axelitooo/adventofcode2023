@@ -1,17 +1,17 @@
-def buildMapps(lines):
+def buildMapps():
 	mapps = []
 	mapindex = -1
-	for i in range(2, len(lines)):
-		if lines[i][0] in "0123456789":
-			numbers = lines[i].strip().split(" ")
+	for line in lines[2:]:
+		if line[0].isdigit():
+			numbers = line.strip().split(" ")
 			mapp = [int(number) for number in numbers]
 			mapps[mapindex].append(mapp)
-		elif lines[i][0] != "\n":
+		elif line[0] != "\n":
 			mapindex += 1
 			mapps.append([])
 	return mapps
 
-def part1(seeds, mapps):
+def part1():
 	minimum = 10E12
 	for seed in seeds:
 		for mapp in mapps:
@@ -26,7 +26,7 @@ def part1(seeds, mapps):
 			minimum = seed
 	return minimum
 
-def part2(seeds, mapps):
+def part2():
 	minimum = 10E12
 	i = 0
 	while i < len(seeds):
@@ -58,7 +58,7 @@ def part2(seeds, mapps):
 
 if __name__ == "__main__":
 	lines = open(file = "input.txt", mode = "r", encoding = "utf-8").readlines()
-	mapps = buildMapps(lines = lines)
+	mapps = buildMapps()
 	seeds = [int(seed) for seed in lines[0].strip().split(":")[1:][0].split(" ")[1:]]
-	print(part1(seeds = seeds, mapps = mapps))
-	print(part2(seeds = seeds, mapps = mapps))
+	print(part1())
+	print(part2())

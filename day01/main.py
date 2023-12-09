@@ -1,4 +1,4 @@
-def part1(lines):
+def part1():
 	total = 0
 	for line in lines:
 		first = -1
@@ -11,7 +11,7 @@ def part1(lines):
 		total += 10*first+last
 	return total
 
-def part2(lines):
+def part2():
 	digits = ["one","two","three","four","five","six","seven","eight","nine"]
 	total = 0
 	for line in lines:
@@ -27,5 +27,5 @@ def part2(lines):
 
 if __name__ == "__main__":
 	lines = open(file = "input.txt", mode = "r", encoding = "utf-8").readlines()
-	print(part1(lines = lines))
-	print(part2(lines = lines))
+	print(part1())
+	print(part2())

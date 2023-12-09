@@ -1,5 +1,3 @@
-JOKERS = [False]
-
 def value(card):
 	values = { "J":9-9*JOKERS[0], "T":8+JOKERS[0], "Q":10, "K":11, "A":12 }
 	return int(card)-(2-JOKERS[0]) if card.isdigit() else values[card]
@@ -53,22 +51,23 @@ def order_all(hands, ranks):
 			rank.remove(highest)
 	return order
 
-def part1(lines):
+def part1():
 	hands = []
 	bidds = []
 	for line in lines:
-		line = line.strip().split(" ")
 		hands.append(line[0])
 		bidds.append(int(line[1]))
 	ranks = get_ranks(hands = hands)
 	order = order_all(hands = hands, ranks = ranks)
 	return sum([bidds[index]*(i+1) for i, index in enumerate(order[::-1])])
 
-def part2(lines):
+def part2():
 	JOKERS[0] = True
-	return part1(lines = lines)
+	return part1()
 
 if __name__ == "__main__":
+	JOKERS = [False]
 	lines = open(file = "input.txt", mode = "r", encoding = "utf-8").readlines()
-	print(part1(lines = lines))
-	print(part2(lines = lines))
+	lines = [line.strip().split(" ") for line in lines]
+	print(part1())
+	print(part2())

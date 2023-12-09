@@ -1,7 +1,6 @@
-def part1(lines):
+def part1():
 	total = 0
-	for i in range(len(lines)):
-		line = lines[i].strip().split(":")[1].split("|")
+	for line in lines:
 		winningS = line[0]
 		currentS = line[1]
 		winningI = []
@@ -19,10 +18,9 @@ def part1(lines):
 		total += multi
 	return total
 
-def part2(lines):
+def part2():
 	total = [1 for i in range(len(lines))]
-	for i in range(len(lines)):
-		line = lines[i].strip().split(":")[1].split("|")
+	for i, line in enumerate(lines):
 		winningS = line[0]
 		currentS = line[1]
 		winningI = []
@@ -44,5 +42,6 @@ def part2(lines):
 
 if __name__ == "__main__":
 	lines = open(file = "input.txt", mode = "r", encoding = "utf-8").readlines()
-	print(part1(lines = lines))
-	print(part2(lines = lines))
+	lines = [line.strip().split(":")[1].split("|") for line in lines]
+	print(part1())
+	print(part2())

@@ -1,4 +1,4 @@
-def part1(lines):
+def part1():
 	times = [int(element) for element in lines[0].strip().split(" ")[6:] if element != ""]
 	dists = [int(element) for element in lines[1].strip().split(" ")[2:] if element != ""]
 	ways = [0 for i in range(len(times))]
@@ -8,7 +8,7 @@ def part1(lines):
 				ways[i] += 1
 	return ways[0]*ways[1]*ways[2]*ways[3]
 
-def part2(lines):
+def part2():
 	times = [element for element in lines[0].strip().split(" ")[6:] if element != ""]
 	dists = [element for element in lines[1].strip().split(" ")[2:] if element != ""]
 	time = int(times[0]+times[1]+times[2]+times[3])
@@ -24,5 +24,5 @@ def part2(lines):
 
 if __name__ == "__main__":
 	lines = open(file = "input.txt", mode = "r", encoding = "utf-8").readlines()
-	print(part1(lines = lines))
-	print(part2(lines = lines))
+	print(part1())
+	print(part2())
