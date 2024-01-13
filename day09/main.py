@@ -1,5 +1,3 @@
-NEXT = [1]
-
 def deeper(sequence):
 	return [sequence[i]-sequence[i-1] for i in range(1, len(sequence))]
 
@@ -7,7 +5,7 @@ def higher(sequences, index, value):
 	value = sequences[index][len(sequences[index])-1]+value if NEXT[0] else sequences[index][0]-value
 	return value if index == 0 else higher(sequences = sequences, index = index-1, value = value)
 
-def part1(lines):
+def part1():
 	total = 0
 	for line in lines:
 		sequence = [int(s) for s in line.strip().split(" ")]
@@ -21,11 +19,12 @@ def part1(lines):
 				sequences.append(sequence)
 	return total
 
-def part2(lines):
+def part2():
 	NEXT[0] = 0
-	return part1(lines)
+	return part1()
 
 if __name__ == "__main__":
+	NEXT = [1]
 	lines = open(file = "input.txt", mode = "r", encoding = "utf-8").readlines()
-	print(part1(lines = lines))
-	print(part2(lines = lines))
+	print(part1())
+	print(part2())
